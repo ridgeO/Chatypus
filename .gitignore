@@ -1,3 +1,5 @@
+# ignore firebaseConfig.js
+components/firebaseConfig.js
 # OSX
 #
 .DS_Store
