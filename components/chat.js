@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableHighlight,
   StatusBar,
-  ListView,
   KeyboardAvoidingView,
   View
 } from 'react-native';
@@ -15,20 +14,55 @@ import styles from './styles.js';
 class chat extends Component {
   static navigationOptions = {
     title: 'Chat',
-    headerStyle: {backgroundColor: '#1E90FF'},
-    headerTitleStyle: styles.chatTopperNav,
-    headerBackTitleStyle: styles.chatBackNav
+    header: null
+    //headerStyle: {backgroundColor: '#1E90FF'},
+    //headerTitleStyle: styles.chatTopperNav,
+    //headerBackTitleStyle: styles.chatBackNav
   };
 
   constructor(props) {
     super(props);
     var FirebaseDB = firebaseApp.database();
-    this._messagesRef = FirebaseDB.ref('channels/'+this.props.title);
-    this._messages = [];
+    this.messagesRef = FirebaseDB.ref('messages/' + 'channelId');
     this.state = {
-      messages: this._messages,
-      typingMessage: ''
-    };
+      user:null,
+      loading: true,
+      newMessage: ""
+    }
+  }
+
+  componentDidMount(){
+    // start listening for firebase updates
+    this.listenForMessages(this.messagesRef);
+  }
+
+  listenForMessages(messagesRef){
+    //Get data from firebase and update listview accordingly
+    messagesRef.on('value', (dataSnapshot) => {
+      var messages = [];
+      dataSnapshot.forEach((child) => {
+        messages.push({
+          user: child.val().user,
+          msg: child.val().msg,
+          key: child.key
+        });
+      });
+
+      this.setState({
+        messages:messages
+      });
+      console.log(messages)
+    });
+  }
+
+  addMessage(){
+    this.messagesRef.push({
+      user: 'J',
+      msg: this.state.newMessage,
+    })
+    this.setState({
+      newMessage: ''
+    })
   }
 
   render() {
@@ -50,8 +84,13 @@ class chat extends Component {
             </View>
           </View>
           <View style={styles.newMessageContainer}>
-            <TextInput style={styles.newMessageInput} placeholder={"New Message"} multiline={true}/>
-            <TouchableHighlight style={styles.newMessageButton}>
+            <TextInput style={styles.newMessageInput} placeholder={"New Message"}
+              onChangeText={(text) => this.setState({newMessage: text})}
+              value={this.state.newMessage}
+            />
+            <TouchableHighlight style={styles.newMessageButton}
+              onPress={() => this.addMessage()}
+            >
               <Text style={styles.newMessageButtonText}>
                 Send
               </Text>

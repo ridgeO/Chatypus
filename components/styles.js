@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     flexDirection: 'row',
-    top: 30,
+    marginTop: 30,
     backgroundColor: '#fff'
   },
   liContainer: {

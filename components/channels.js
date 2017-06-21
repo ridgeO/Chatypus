@@ -84,6 +84,7 @@ class channels extends Component {
           </TextInput>
           <TouchableHighlight style={styles.newChannelButton}
             onPress={() => this.addChannel()}
+            underlayColor="#fff"
           >
             <Text
               style={styles.newChannelButtonText}
@@ -99,6 +100,7 @@ class channels extends Component {
               renderItem={({item}) => (
                 <TouchableHighlight style={styles.li}
                 onPress={() => this.openChat()}
+                underlayColor="#fff"
                 >
                   <Text style={styles.liText}>{`${item.name} ${item.key}`}</Text>
                 </TouchableHighlight>
