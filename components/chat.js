@@ -6,27 +6,29 @@ import {
   TouchableHighlight,
   StatusBar,
   KeyboardAvoidingView,
+  FlatList,
   View
 } from 'react-native';
 import firebaseApp from './firebaseConfig.js';
 import styles from './styles.js';
 
 class chat extends Component {
-  static navigationOptions = {
-    title: 'Chat',
-    header: null
-    //headerStyle: {backgroundColor: '#1E90FF'},
-    //headerTitleStyle: styles.chatTopperNav,
-    //headerBackTitleStyle: styles.chatBackNav
-  };
+  static navigationOptions = ({ navigation }) => ({
+    title: `${navigation.state.params.channelName} Chat`,
+    headerStyle: {backgroundColor: '#1E90FF'},
+    headerTitleStyle: styles.chatTopperNav,
+    headerBackTitleStyle: styles.chatBackNav
+  });
 
   constructor(props) {
     super(props);
     var FirebaseDB = firebaseApp.database();
-    this.messagesRef = FirebaseDB.ref('messages/' + 'channelId');
+    this.messagesRef = FirebaseDB.ref(`messages/${this.props.navigation.state.params.channelKey}`);
     this.state = {
-      user:null,
+      user: null,
       loading: true,
+      channelKey: this.props.navigation.state.params.channelKey,
+      channelName: this.props.navigation.state.params.channelName,
       newMessage: ""
     }
   }
@@ -51,7 +53,6 @@ class chat extends Component {
       this.setState({
         messages:messages
       });
-      console.log(messages)
     });
   }
 
@@ -80,8 +81,14 @@ class chat extends Component {
               <Text style={styles.messageTextSelf}>Your Message</Text>
             </View>
             <View style={styles.messageBubbleOther}>
-              <Text style={styles.messageTextOther}>Someone Elses Message</Text>
+              <Text style={styles.messageTextOther}>{this.state.channelKey}</Text>
             </View>
+            <FlatList
+              data={this.state.messages}
+              renderItem={({item}) => (
+                <Text style={styles.liText}>{`${item.msg} ${item.key}`}</Text>
+              )}
+            />
           </View>
           <View style={styles.newMessageContainer}>
             <TextInput style={styles.newMessageInput} placeholder={"New Message"}

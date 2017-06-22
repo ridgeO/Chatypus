@@ -62,9 +62,10 @@ class channels extends Component {
     alert("Channel added");
   }
 
-  openChat(){
+  openChat(channel){
+    console.log(channel)
     //Open channel to send/receive messages therein
-    this.props.navigation.navigate('Chat');
+    this.props.navigation.navigate('Chat', {channelKey: channel.key, channelName: channel.name});
   }
 
   render() {
@@ -99,7 +100,7 @@ class channels extends Component {
               data={this.state.channels}
               renderItem={({item}) => (
                 <TouchableHighlight style={styles.li}
-                onPress={() => this.openChat()}
+                onPress={() => this.openChat(item)}
                 underlayColor="#fff"
                 >
                   <Text style={styles.liText}>{`${item.name} ${item.key}`}</Text>
