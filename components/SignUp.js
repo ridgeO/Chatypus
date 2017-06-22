@@ -42,8 +42,8 @@ class SignUp extends Component {
     }
     else {
       Alert.alert(
-        'Invalid Sign In',
-        'The Email and Password cannot be blank. Please sign in to continue.',
+        'Invalid Sign Up',
+        'The Email and Password fields cannot be blank. Please sign in to continue.',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
@@ -62,16 +62,18 @@ class SignUp extends Component {
         <StatusBar
           barStyle="light-content"
         />
-        <Text style={styles.appTitle}>
-          Chatypus!
-        </Text>
         <Image
           source={require('../images/platypusLogoSmallWhite.png')}
           style={{width: 150, height: 150, marginBottom: 30}}
         />
+        <Text style={styles.appTitle}>
+          Chatypus!
+        </Text>
         <Text style={{color: 'white', alignSelf: 'flex-start', marginLeft: 50}}>Email</Text>
         <TextInput
           style={styles.textInput}
+          autoCapitalize={'none'}
+          keyboardType={'email-address'}
           placeholder={"example@email.com"}
           placeholderTextColor={'#fff'}
           onChangeText={(text) => this.setState({email: text})}
