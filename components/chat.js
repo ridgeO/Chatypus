@@ -12,7 +12,7 @@ import {
 import firebaseApp from './firebaseConfig.js';
 import styles from './styles.js';
 
-class chat extends Component {
+class Chat extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: `${navigation.state.params.channelName} Chat`,
     headerStyle: {backgroundColor: '#1E90FF'},
@@ -23,9 +23,10 @@ class chat extends Component {
   constructor(props) {
     super(props);
     var FirebaseDB = firebaseApp.database();
+    var FirebaseUser = firebaseApp.auth().currentUser.uid;
     this.messagesRef = FirebaseDB.ref(`messages/${this.props.navigation.state.params.channelKey}`);
     this.state = {
-      user: null,
+      user: FirebaseUser,
       loading: true,
       channelKey: this.props.navigation.state.params.channelKey,
       channelName: this.props.navigation.state.params.channelName,
@@ -55,10 +56,25 @@ class chat extends Component {
       });
     });
   }
+  renderRow(item){
+    if (this.state.user === item.user){
+      return(
+        <View style={styles.messageBubbleSelf}>
+          <Text style={styles.messageTextSelf}>{item.msg}</Text>
+        </View>
+      )
+    } else {
+      return(
+        <View style={styles.messageBubbleOther}>
+          <Text style={styles.messageTextOther}>{item.msg}</Text>
+        </View>
+      )
+    }
+  }
 
   addMessage(){
     this.messagesRef.push({
-      user: 'J',
+      user: this.state.user,
       msg: this.state.newMessage,
     })
     this.setState({
@@ -77,17 +93,10 @@ class chat extends Component {
           behavior="padding"
         >
           <View style={styles.messagesContainer}>
-            <View style={styles.messageBubbleSelf}>
-              <Text style={styles.messageTextSelf}>Your Message</Text>
-            </View>
-            <View style={styles.messageBubbleOther}>
-              <Text style={styles.messageTextOther}>{this.state.channelKey}</Text>
-            </View>
             <FlatList
               data={this.state.messages}
-              renderItem={({item}) => (
-                <Text style={styles.liText}>{`${item.msg} ${item.key}`}</Text>
-              )}
+              renderItem={({item}) => (this.renderRow(item))}
+              initialScrollIndex={Object(this.state.messages, this.state.messages).length}
             />
           </View>
           <View style={styles.newMessageContainer}>
@@ -109,4 +118,4 @@ class chat extends Component {
   }
 }
 
-export default chat;
+export default Chat;

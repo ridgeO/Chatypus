@@ -7,12 +7,13 @@ import {
   StatusBar,
   ListView,
   FlatList,
+  ListItem,
   View
 } from 'react-native';
 import firebaseApp from './firebaseConfig.js';
 import styles from './styles.js';
 
-class channels extends Component {
+class Channels extends Component {
   static navigationOptions = {
     title: 'Channels',
     header: null
@@ -62,6 +63,17 @@ class channels extends Component {
     alert("Channel added");
   }
 
+  renderRow(item){
+    return (
+      <TouchableHighlight style={styles.li}
+      onPress={() => this.openChat(item)}
+      underlayColor="#fff"
+      >
+        <Text style={styles.liText}>{item.name}</Text>
+      </TouchableHighlight>
+    )
+  }
+
   openChat(channel){
     console.log(channel)
     //Open channel to send/receive messages therein
@@ -98,13 +110,7 @@ class channels extends Component {
           <View style={styles.liContainer}>
             <FlatList
               data={this.state.channels}
-              renderItem={({item}) => (
-                <TouchableHighlight style={styles.li}
-                onPress={() => this.openChat(item)}
-                underlayColor="#fff"
-                >
-                  <Text style={styles.liText}>{`${item.name} ${item.key}`}</Text>
-                </TouchableHighlight>
+              renderItem={({item}) => (this.renderRow(item)
               )}
             />
           </View>
@@ -114,4 +120,4 @@ class channels extends Component {
   }
 }
 
-export default channels;
+export default Channels;

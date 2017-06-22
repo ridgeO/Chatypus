@@ -4,15 +4,17 @@ import {
   AppRegistry,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import login from './components/login.js';
-import channels from './components/channels.js';
-import chat from './components/chat.js'
+import SignIn from './components/SignIn.js';
+import SignUp from './components/SignUp.js';
+import Channels from './components/Channels.js';
+import Chat from './components/Chat.js'
 
 const RootNavigator = StackNavigator(
   {
-    Login : { name: 'Login', screen: login },
-    Channels: { name: 'Channels', screen: channels },
-    Chat: { name: 'Chat', screen: chat }
+    Login: { name: 'SignIn', screen: SignIn },
+    SignUp: { name: 'SignUp', screen: SignUp },
+    Channels: { name: 'Channels', screen: Channels },
+    Chat: { name: 'Chat', screen: Chat }
   },
   { headerMode: 'screen' }
 );

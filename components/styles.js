@@ -4,19 +4,22 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   containerLogin: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#1E90FF',
   },
   appTitle: {
     color: '#fff',
     fontSize: 48,
-    position: 'absolute',
-    top: 60
+    fontWeight: '200',
+    marginBottom: 30
   },
-  lowerButtonContainer: {
+  /*lowerButtonContainer: {
     bottom: 60,
-  },
+    width: 300,
+    height: 300,
+    backgroundColor: '#f9f9f9'
+  },*/
   loginButton: {
     backgroundColor: 'transparent',
     borderColor: '#fff',
@@ -30,17 +33,26 @@ const styles = StyleSheet.create({
     fontSize: 20
   },
   textInput: {
-    flex: 1,
     height: 52,
-    color: '#1E90FF',
+    color: '#fff',
     fontSize: 20,
-    textAlign: 'center',
-    borderRadius: 4,
-    backgroundColor: '#fff',
+    textAlign: 'left',
+    backgroundColor: '#1E90FF',
+    borderBottomWidth: 2,
+    marginBottom: 5,
+    marginLeft: 50,
+    marginRight: 50,
+    borderBottomColor: '#fff'
   },
   inputContainer: {
-    alignItems: 'center',
-    flexDirection: 'row'
+    borderBottomColor: '#fff',
+    borderBottomWidth: 2
+  },
+  loginLowerText: {
+    color: '#fff',
+    fontWeight: '500',
+    fontSize: 15,
+    marginTop: 10
   },
   containerChannels: {
     flex: 1,
@@ -60,6 +72,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     backgroundColor: '#fff',
+    borderBottomColor: '#f9f9f9',
+    borderBottomWidth: 2,
     top: 30
   },
   newChannelInput: {
@@ -131,11 +145,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    top: 30,
   },
   messageBubbleSelf: {
     padding: 20,
-    backgroundColor: 'blue',
+    backgroundColor: '#1E90FF',
     borderRadius: 10,
     margin: 5
   },
