@@ -66,7 +66,7 @@ class SignIn extends Component {
           Chatypus!
         </Text>
         <Image
-          source={{uri: "https://firebasestorage.googleapis.com/v0/b/chattest-9a63a.appspot.com/o/platypus_logo_small_white.png?alt=media&token=798540a7-8600-41b4-8ac3-27ee17047db8"}}
+          source={require('../images/platypusLogoSmallWhite.png')}
           style={{width: 150, height: 150, marginBottom: 30}}
         />
         <Text style={{color: 'white', alignSelf: 'flex-start', marginLeft: 50}}>Email</Text>
