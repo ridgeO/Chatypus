@@ -24,13 +24,14 @@ class ChatV2 extends Component {
   constructor(props) {
     super(props);
     var FirebaseDB = firebaseApp.database();
-    var FirebaseUser = firebaseApp.auth().currentUser.uid;
+    var FirebaseUser = firebaseApp.auth().currentUser;
     this.messagesRef = FirebaseDB.ref(`messages/${this.props.navigation.state.params.channelKey}`);
     this.state = {
       user: FirebaseUser,
       loading: true,
       channelKey: this.props.navigation.state.params.channelKey,
       channelName: this.props.navigation.state.params.channelName,
+      messages: []
     }
   }
 
@@ -42,19 +43,23 @@ class ChatV2 extends Component {
   listenForMessages(messagesRef){
     //Get data from firebase and update listview accordingly
     messagesRef.on('value', (dataSnapshot) => {
-      var messages = [];
+      var messagesFB = [];
       dataSnapshot.forEach((child) => {
-        messages = [({
+        messagesFB = [({
           _id: child.key,
-          text: child.val().msg,
+          text: child.val().text,
           createdAt: child.val().createdAt,
-          user: { _id: child.val().user }
-        }), ...messages];
+          user: {
+            _id: child.val().user._id,
+            name: child.val().user.name,
+            avatar: child.val().user.avatar
+          }
+        }), ...messagesFB];
       });
-      console.log(messages);
+      console.log(messagesFB);
 
       this.setState({
-        messages: messages
+        messages: messagesFB
       });
     });
   }
@@ -62,9 +67,13 @@ class ChatV2 extends Component {
   addMessage(message = {}){
     console.log(message[0]);
     this.messagesRef.push({
-      user: message[0].user._id,
-      msg: message[0].text,
-      createdAt: Date.now()
+      text: message[0].text,
+      createdAt: Date.now(),
+      user: {
+        _id: message[0].user._id,
+        name: message[0].user.name,
+        avatar: message[0].user.avatar
+      }
     })
   }
 
@@ -78,7 +87,9 @@ class ChatV2 extends Component {
           messages={this.state.messages}
           onSend={this.addMessage.bind(this)}
           user={{
-            _id: this.state.user
+            _id: this.state.user.uid,
+            name: this.state.user.email,
+            avatar: 'https://s-media-cache-ak0.pinimg.com/736x/8a/9d/5d/8a9d5dfc5c3bcaff8958c479481df668--sticker-vinyl-car-decals.jpg'
           }}
         />
       </View>
