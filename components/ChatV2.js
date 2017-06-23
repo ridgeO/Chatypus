@@ -44,17 +44,17 @@ class ChatV2 extends Component {
     messagesRef.on('value', (dataSnapshot) => {
       var messages = [];
       dataSnapshot.forEach((child) => {
-        messages.push({
+        messages = [({
           _id: child.key,
           text: child.val().msg,
           createdAt: child.val().createdAt,
           user: { _id: child.val().user }
-        });
+        }), ...messages];
       });
       console.log(messages);
 
       this.setState({
-        messages:messages
+        messages: messages
       });
     });
   }

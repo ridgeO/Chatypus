@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   },
   liText: {
     color: '#1E90FF',
-    fontSize: 16,
+    fontSize: 22,
   },
   containerChat: {
     flex: 1,
