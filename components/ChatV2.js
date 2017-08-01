@@ -29,8 +29,6 @@ class ChatV2 extends Component {
     this.state = {
       user: FirebaseUser,
       loading: true,
-      channelKey: this.props.navigation.state.params.channelKey,
-      channelName: this.props.navigation.state.params.channelName,
       messages: []
     }
   }

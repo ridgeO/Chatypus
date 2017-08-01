@@ -9,10 +9,12 @@ import {
   StatusBar,
   Alert,
   Image,
-  View
+  View,
+  KeyboardAvoidingView
 } from 'react-native';
 import firebaseApp from './firebaseConfig.js';
 import styles from './styles.js';
+import LogoBounce from './LogoBounce.js';
 
 class SignUp extends Component {
   static navigationOptions = {
@@ -58,14 +60,15 @@ class SignUp extends Component {
 
   render() {
     return (
-      <View style={styles.containerLogin}>
+      <KeyboardAvoidingView
+        style={styles.keyboardView}
+        contentContainerStyle={styles.authContainer}
+        behavior={'position'}
+      >
         <StatusBar
           barStyle="light-content"
         />
-        <Image
-          source={require('../images/platypusLogoSmallWhite.png')}
-          style={{width: 150, height: 150, marginBottom: 30}}
-        />
+        <LogoBounce />
         <Text style={styles.appTitle}>
           Chatypus!
         </Text>
@@ -100,7 +103,7 @@ class SignUp extends Component {
         >
           <Text style={styles.loginLowerText}>Sign In</Text>
         </TouchableHighlight>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }

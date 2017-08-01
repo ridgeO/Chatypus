@@ -2,11 +2,15 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-  containerLogin: {
+  keyboardView: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#1E90FF'
+  },
+  authContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
     alignItems: 'center',
-    backgroundColor: '#1E90FF',
+    marginBottom: 60
   },
   appTitle: {
     color: '#fff',

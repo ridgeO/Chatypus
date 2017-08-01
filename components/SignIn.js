@@ -9,10 +9,12 @@ import {
   StatusBar,
   Alert,
   Image,
-  View
+  View,
+  KeyboardAvoidingView
 } from 'react-native';
 import firebaseApp from './firebaseConfig.js';
 import styles from './styles.js';
+import LogoBounce from './LogoBounce.js';
 
 class SignIn extends Component {
   static navigationOptions = {
@@ -43,7 +45,7 @@ class SignIn extends Component {
     else {
       Alert.alert(
         'Invalid Sign In',
-        'The Email and Password fields cannot be blank. Please sign in to continue.',
+        'The Email and Password fields cannot be blank.',
         [
           {text: 'OK', onPress: () => console.log('OK Pressed')},
         ],
@@ -58,14 +60,15 @@ class SignIn extends Component {
 
   render() {
     return (
-      <View style={styles.containerLogin}>
+      <KeyboardAvoidingView
+        style={styles.keyboardView}
+        contentContainerStyle={styles.authContainer}
+        behavior={'position'}
+      >
         <StatusBar
           barStyle="light-content"
         />
-        <Image
-          source={require('../images/platypusLogoSmallWhite.png')}
-          style={{width: 150, height: 150, marginBottom: 30}}
-        />
+        <LogoBounce />
         <Text style={styles.appTitle}>
           Chatypus!
         </Text>
@@ -101,7 +104,7 @@ class SignIn extends Component {
         >
           <Text style={styles.loginLowerText}>Create Account</Text>
         </TouchableHighlight>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
